@@ -16,12 +16,15 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.85.0/examples/js/libs/stats.min.js"></script>
+    <script src="https://unpkg.com/three@0.85.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
       let camera;
       let scene;
       let renderer;
       let mesh;
+      let stats
 
       function init() {
         camera = new THREE.PerspectiveCamera(
@@ -45,7 +48,7 @@
             color: 0x000000
           })
         );
-        hair.position.set(0, 3.8, 0);
+        hair.position.set(0, 3.78, 0);
 
         let head = new THREE.Mesh(
           new THREE.BoxGeometry(0.1, 0.38, 0.1),
@@ -53,23 +56,23 @@
             color: 0xfcc75f
           })
         );
-        head.position.set(0, 3.56, 0);
+        head.position.set(0, 3.54, 0);
 
         let leftEye = new THREE.Mesh(
-          new THREE.SphereGeometry(0.005, 100, 100),
+          new THREE.SphereGeometry(0.01, 100, 100),
           new THREE.MeshBasicMaterial({
             color: 0x000000
           })
         );
-        leftEye.position.set(-0.008, 3, 2);
+        leftEye.position.set(-0.02, 3.6, 0.05);
 
         let rightEye = new THREE.Mesh(
-          new THREE.SphereGeometry(0.005, 100, 100),
+          new THREE.SphereGeometry(0.01, 100, 100),
           new THREE.MeshBasicMaterial({
             color: 0x000000
           })
         );
-        rightEye.position.set(0.008, 3, 2);
+        rightEye.position.set(0.02, 3.6, 0.05);
 
         let neck = new THREE.Mesh(
           new THREE.BoxGeometry(0.05, 0.1, 0.1),
@@ -138,12 +141,12 @@
         leftHand.position.set(-0.24, 3.15, 0);    
 
         let belt = new THREE.Mesh(
-          new THREE.TorusGeometry(0.035, 0.025, 20, 100),
+          new THREE.TorusGeometry(0.035, 0.07, 20, 100),
           new THREE.MeshBasicMaterial({
             color: 0xf4da11
           })
         );
-        belt.position.set(0, 2.55, 1);
+        belt.position.set(0, 2.53,0);
         belt.rotation.x += 1.38;
 
         let short = new THREE.Mesh(
@@ -208,7 +211,7 @@
             color: 0xc10000
           })
         );
-        cap.position.set(0, 2.455, -0.01);
+        cap.position.set(0, 2.455, -0.06);
 
         const group = new THREE.Group();
         group.add(hair);
@@ -239,11 +242,18 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         document.body.appendChild(renderer.domElement);
+
+        let controls = new THREE.OrbitControls(camera);
+        controls.update();
+
+        stats = Stats()
+        document.body.appendChild(stats.domElement)
       }
 
       function animate(time) {
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
+        stats.update()
       }
 
       init();
