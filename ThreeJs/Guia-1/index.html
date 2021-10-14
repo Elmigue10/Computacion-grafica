@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hola Mundo ThreeJs</title>
+</head>
+<body>
+
+    <div>
+        <ul>
+            <li><a href="./ejercicio1.html">Ejercicio 1</a></li>
+            <li><a href="./ejercicio2.html">Ejercicio 2</a></li>
+        </ul>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"></script>
+
+    <script>
+
+        let camera;
+        let scene;
+        let renderer;
+        let geometry;
+        let material;
+        let mesh;
+
+        function init() {
+
+            camera = new THREE.PerspectiveCamera(75, window.innerHeight / window.innerWidth, 0.1, 100)
+
+            camera.position.z = 3
+
+            scene = new THREE.Scene();
+            scene.backgroundColor = new THREE.Color(0x000000)
+
+            geometry = new THREE.SphereGeometry(1, 10, 10)
+
+            material = new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                wireframe: true
+            })
+
+            mesh = new THREE.Mesh(geometry, material)
+
+            scene.add(mesh)
+
+            renderer = new THREE.WebGLRenderer()
+            renderer.setSize(window.innerWidth, window.innerHeight)
+
+            document.body.appendChild(renderer.domElement)
+        }
+
+        function animate(time){
+            renderer.render(scene, camera)
+            requestAnimationFrame(animate)
+            mesh.rotation.x += 0.003
+            mesh.position.z -= 0.1
+        }
+
+        init()
+
+        requestAnimationFrame(animate)
+    </script>
+
+</body>
+</html>

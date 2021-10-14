@@ -1,0 +1,51 @@
+Objeto = Geometria + material
+Material = Color o textura
+Transformación = Posición, rotación, escala
+
+F12 = render
+CRT+0 = Posición camara > render
+T = Menú izquierdo
+N = Menú derecho
+1 = Vista frontal
+3 = Vista derecha
+CRT+1 = Vista atras
+CTR+3 = Vista derecha
+7 = Arriba
+CTR+7 = Abajo
+Click izquierdo = Selección pivote
+Click izquierdo sobre el menú de transformación y sobre el eje en
+el que se desee trasladar
+G = Traslación
+G+X = Trasnlación X
+G+Y = Traslación Y
+G+Z = Traslación Z
+R = Rotacíon
+R+Z = Rotación Z
+R+Y = Rotación Y
+R+X = Rotación X
+S = Escala
+S+Z = Escala en Z
+S+Y = Escala en Y
+S+X = Escala en X
+B = Selección completa
+ESPACIO = Agregar figuras o texto "add cube" ó "add text"
+Z = vista alambre
+Shift + D = Duplicar un objeto
+Camara = Perspectiva
+Camara = Orgrafica
+Shift + S = Menu cursor
+Material = Color, textura
+Geometría = Vertices, ejes y caras
+TAB = Cambior el modo del objeto
+MODOS = Modo edición y modo objeto
+A = Seleccionar y deseleccionar un objeto
+C = Radio de movimiento
+Click derecho = Quitar el comando C
+Botón scroll = Desmarcar elementos seleccionado
+O = Suavizar transformación
+F = Crear una cara
+Shift + Click = Seleccionar varios objetos
+Ctrl + J = Join => Agrupar los objetos
+K = Permite hacer un corte
+E = Sacar volumen EXTRUSIÓN
+Ctrl + R = Otra opción para realizar cortes

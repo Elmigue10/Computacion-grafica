@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 2</title>
+  </head>
+
+  <body>
+    <a href="./index.html">Inicio</a>
+
+    <div class="superman">
+      <h1>SuperMan</h1>
+      <img src="./superman.jpg" alt="superman" />
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"></script>
+
+    <script>
+      let camera;
+      let scene;
+      let renderer;
+      let mesh;
+
+      function init() {
+        camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerHeight / window.innerWidth,
+          0.1,
+          100
+        );
+
+        camera.position.z = 3;
+        camera.position.y = 2.7;
+
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xB0F9FF);
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+
+        let hair = new THREE.Mesh(
+          new THREE.BoxGeometry(0.1, 0.1, 0.1),
+          new THREE.MeshBasicMaterial({
+            color: 0x000000
+          })
+        );
+        hair.position.set(0, 3.8, 0);
+
+        let head = new THREE.Mesh(
+          new THREE.BoxGeometry(0.1, 0.38, 0.1),
+          new THREE.MeshBasicMaterial({
+            color: 0xfcc75f
+          })
+        );
+        head.position.set(0, 3.56, 0);
+
+        let leftEye = new THREE.Mesh(
+          new THREE.SphereGeometry(0.005, 100, 100),
+          new THREE.MeshBasicMaterial({
+            color: 0x000000
+          })
+        );
+        leftEye.position.set(-0.008, 3, 2);
+
+        let rightEye = new THREE.Mesh(
+          new THREE.SphereGeometry(0.005, 100, 100),
+          new THREE.MeshBasicMaterial({
+            color: 0x000000
+          })
+        );
+        rightEye.position.set(0.008, 3, 2);
+
+        let neck = new THREE.Mesh(
+          new THREE.BoxGeometry(0.05, 0.1, 0.1),
+          new THREE.MeshBasicMaterial({
+            color: 0xfcc75f
+          })
+        );
+        neck.position.set(0, 3.3, 0);
+
+        let chest = new THREE.Mesh(
+          new THREE.BoxGeometry(0.15, 0.8, 0.1),
+          new THREE.MeshBasicMaterial({
+            color: 0x0b72b5
+          })
+        );
+        chest.position.set(0, 2.89, 0);
+
+        let borderLogo = new THREE.Mesh(
+          new THREE.BoxGeometry(0.08, 0.18, 0.1),
+          new THREE.MeshBasicMaterial({
+            color: 0xe4001e
+          })
+        );
+        borderLogo.position.set(0, 3.05, 0);
+
+        let centerLogo = new THREE.Mesh(
+          new THREE.BoxGeometry(0.06, 0.1, 0.1),
+          new THREE.MeshBasicMaterial({
+            color: 0xf4da11
+          })
+        );
+        centerLogo.position.set(0, 3.05, 0);
+        
+        let leftArm = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.07, 0.07, 0.18, 100),
+          new THREE.MeshBasicMaterial({
+            color: 0x0b72b5
+          })
+        );
+        leftArm.position.set(-0.15, 3.15, 0);
+        leftArm.rotation.z = Math.PI / 2;
+
+        let rightArm = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.07, 0.07, 0.18, 100),
+          new THREE.MeshBasicMaterial({
+            color: 0x0b72b5
+          })
+        );
+        rightArm.position.set(0.15, 3.15, 0);
+        rightArm.rotation.z = Math.PI / 2;
+
+        let rightHand = new THREE.Mesh(
+          new THREE.SphereGeometry(0.07, 100, 100),
+          new THREE.MeshBasicMaterial({
+            color: 0xfcc75f
+          })
+        );
+        rightHand.position.set(0.24, 3.15, 0);  
+
+        let leftHand = new THREE.Mesh(
+          new THREE.SphereGeometry(0.07, 100, 100),
+          new THREE.MeshBasicMaterial({
+            color: 0xfcc75f
+          })
+        );
+        leftHand.position.set(-0.24, 3.15, 0);    
+
+        let belt = new THREE.Mesh(
+          new THREE.TorusGeometry(0.035, 0.025, 20, 100),
+          new THREE.MeshBasicMaterial({
+            color: 0xf4da11
+          })
+        );
+        belt.position.set(0, 2.55, 1);
+        belt.rotation.x += 1.38;
+
+        let short = new THREE.Mesh(
+          new THREE.BoxGeometry(0.15, 0.3, 0.1),
+          new THREE.MeshBasicMaterial({
+            color: 0xe4001e
+          })
+        );
+        short.position.set(0, 2.35, 0);
+
+        let leftLeg1 = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.03, 0.03, 0.55, 4),
+          new THREE.MeshBasicMaterial({
+            color: 0x0b72b5
+          })
+        );
+        leftLeg1.position.set(-0.037, 1.98, 0);
+
+        let rigthLeg1 = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.03, 0.03, 0.55, 4),
+          new THREE.MeshBasicMaterial({
+            color: 0x0b72b5
+          })
+        );
+        rigthLeg1.position.set(0.037, 1.98, 0);
+
+        let leftLeg2 = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.03, 0.025, 0.45, 4),
+          new THREE.MeshBasicMaterial({
+            color: 0xe4001e
+          })
+        );
+        leftLeg2.position.set(-0.037, 1.49, 0);
+
+        let rigthLeg2 = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.03, 0.025, 0.45, 4),
+          new THREE.MeshBasicMaterial({
+            color: 0xe4001e
+          })
+        );
+        rigthLeg2.position.set(0.037, 1.49, 0);
+
+        let leftFoot = new THREE.Mesh(
+          new THREE.SphereGeometry(0.032, 100, 100),
+          new THREE.MeshBasicMaterial({
+            color: 0xe4001e
+          })
+        );
+        leftFoot.position.set(-0.037, 1.24, 0);
+
+        let rightFoot = new THREE.Mesh(
+          new THREE.SphereGeometry(0.032, 100, 100),
+          new THREE.MeshBasicMaterial({
+            color: 0xe4001e
+          })
+        );
+        rightFoot.position.set(0.037, 1.24, 0);
+
+        let cap = new THREE.Mesh(
+          new THREE.PlaneGeometry(0.3, 1.7),
+          new THREE.MeshBasicMaterial({
+            color: 0xc10000
+          })
+        );
+        cap.position.set(0, 2.455, -0.01);
+
+        const group = new THREE.Group();
+        group.add(hair);
+        group.add(head);
+        group.add(leftEye);
+        group.add(rightEye);
+        group.add(neck);
+        group.add(chest);
+        group.add(borderLogo);
+        group.add(centerLogo);
+        group.add(rightArm);
+        group.add(leftArm);
+        group.add(rightHand);
+        group.add(leftHand);
+        group.add(belt);
+        group.add(short);
+        group.add(leftLeg1);
+        group.add(rigthLeg1);
+        group.add(leftLeg2);
+        group.add(rigthLeg2);
+        group.add(leftFoot);
+        group.add(rightFoot);
+        group.add(cap);
+
+        scene.add(group);
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        document.body.appendChild(renderer.domElement);
+      }
+
+      function animate(time) {
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+
+      init();
+
+      requestAnimationFrame(animate);
+    </script>
+
+    <style>
+      .superman {
+        text-align: center;
+      }
+      img {
+        width: 15vw;
+        height: 15vw;
+      }
+    </style>
+  </body>
+</html>
