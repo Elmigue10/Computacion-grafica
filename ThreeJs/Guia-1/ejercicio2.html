@@ -18,12 +18,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"></script>
     <script src="https://unpkg.com/three@0.85.0/examples/js/libs/stats.min.js"></script>
     <script src="https://unpkg.com/three@0.85.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.js"></script>
 
     <script>
-      let camera;
-      let scene;
-      let renderer;
-      let mesh;
+      let camera
+      let scene
+      let renderer
+      let mesh
       let stats
 
       function init() {
@@ -39,8 +40,6 @@
 
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xB0F9FF);
-
-        geometry = new THREE.BoxGeometry(1, 1, 1);
 
         let hair = new THREE.Mesh(
           new THREE.BoxGeometry(0.1, 0.1, 0.1),
@@ -246,8 +245,26 @@
         let controls = new THREE.OrbitControls(camera);
         controls.update();
 
+        let _controls = new(function(){
+          this.rotationSpeedX = 0.02
+          this.rotationSpeedY = 0.02
+        })
+
+        let gui = new dat.GUI()
+        gui.add(_controls, "rotationSpeedX", 0, 1)
+        gui.add(_controls, "rotationSpeedY", 0, 1)
+
+        // group.rotatio.x += _controls.rotationSpeedX
+        // group.rotatio.y += _controls.rotationSpeedY
+
         stats = Stats()
         document.body.appendChild(stats.domElement)
+      }
+
+      function createDataGui(){
+        let gui = new dat.GUI()
+        gui.add(_controls, "rotationSpeedX", 0, 1)
+        gui.add(_controls, "rotationSpeedY", 0, 1)
       }
 
       function animate(time) {
