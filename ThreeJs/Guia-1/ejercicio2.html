@@ -30,11 +30,13 @@
       let _controls = new(function(){
           this.rotationSpeedX = 0
           this.rotationSpeedY = 0
+          this.rotationSpeedZ = 0
         })
 
         let gui = new dat.GUI()
-        gui.add(_controls, "rotationSpeedX", -1, 1)
-        gui.add(_controls, "rotationSpeedY", -1, 1)
+        // gui.add(_controls, "rotationSpeedX", -1, 1)
+        // gui.add(_controls, "rotationSpeedY", -1, 1)
+        // gui.add(_controls, "rotationSpeedZ", -1, 1)
 
       function init() {
         camera = new THREE.PerspectiveCamera(
@@ -45,7 +47,7 @@
         );
 
         camera.position.z = 5;
-        camera.position.y = 4;
+        camera.position.y = 5.5;
 
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xB0F9FF);
@@ -251,25 +253,21 @@
 
         document.body.appendChild(renderer.domElement);
 
-        // let controls = new THREE.OrbitControls(camera);
-        // controls.update();
+        let controls = new THREE.OrbitControls(camera);
+        controls.update();
         
         stats = Stats()
         document.body.appendChild(stats.domElement)
       }
       
-      function createDataGui(){
-        let gui = new dat.GUI()
-        gui.add(_controls, "rotationSpeedX", 0, 1)
-        gui.add(_controls, "rotationSpeedY", 0, 1)
-      }
       
       function animate(time) {
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
         stats.update()
-        camera.rotation.x = _controls.rotationSpeedX;
-        camera.rotation.y = _controls.rotationSpeedY;
+        // camera.rotation.x = _controls.rotationSpeedX;
+        // camera.rotation.y = _controls.rotationSpeedY;
+        // camera.rotation.z = _controls.rotationSpeedZ;
       }
       
       init();
