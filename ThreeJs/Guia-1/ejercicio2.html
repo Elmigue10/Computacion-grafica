@@ -27,6 +27,15 @@
       let mesh
       let stats
 
+      let _controls = new(function(){
+          this.rotationSpeedX = 0
+          this.rotationSpeedY = 0
+        })
+
+        let gui = new dat.GUI()
+        gui.add(_controls, "rotationSpeedX", -1, 1)
+        gui.add(_controls, "rotationSpeedY", -1, 1)
+
       function init() {
         camera = new THREE.PerspectiveCamera(
           75,
@@ -242,37 +251,27 @@
 
         document.body.appendChild(renderer.domElement);
 
-        let controls = new THREE.OrbitControls(camera);
-        controls.update();
-
-        let _controls = new(function(){
-          this.rotationSpeedX = 0.02
-          this.rotationSpeedY = 0.02
-        })
-
-        let gui = new dat.GUI()
-        gui.add(_controls, "rotationSpeedX", 0, 1)
-        gui.add(_controls, "rotationSpeedY", 0, 1)
-
-        // group.rotatio.x += _controls.rotationSpeedX
-        // group.rotatio.y += _controls.rotationSpeedY
-
+        // let controls = new THREE.OrbitControls(camera);
+        // controls.update();
+        
         stats = Stats()
         document.body.appendChild(stats.domElement)
       }
-
+      
       function createDataGui(){
         let gui = new dat.GUI()
         gui.add(_controls, "rotationSpeedX", 0, 1)
         gui.add(_controls, "rotationSpeedY", 0, 1)
       }
-
+      
       function animate(time) {
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
         stats.update()
+        camera.rotation.x = _controls.rotationSpeedX;
+        camera.rotation.y = _controls.rotationSpeedY;
       }
-
+      
       init();
 
       requestAnimationFrame(animate);
