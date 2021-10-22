@@ -27,7 +27,6 @@
         let camera
         let renderer
         let material
-        let planeGeometry
         let plane
         let controls
         let stats
@@ -40,7 +39,7 @@
                 let cubeSizeZ = Math.floor(Math.random() * (40 - 10) + (4))
                 
                 let geometry = new THREE.CubeGeometry(cubeSizeXY, cubeSizeXY, cubeSizeZ);
-                let material = new THREE.MeshPhongMaterial({ color: 0xffff00 });
+                new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff })
                 cube = new THREE.Mesh(geometry, material);
                 cube.name = "cube";
 
@@ -56,27 +55,67 @@
                 window.innerWidth / window.innerHeight,
                 1,
                 100
-                );
+            )
                 camera.position.set(0, 0, 100);
-                controls = new THREE.OrbitControls(camera);
-            }
+                controls = new THREE.OrbitControls(camera)
+        }
             
-            function createRenderer() {
-                renderer = new THREE.WebGLRenderer();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
-            }
+        function createRenderer() {
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+        }
+        
+        function createPlane() {
+            geometry = new THREE.PlaneGeometry(120, 120, 1, 1);
+            let material = new THREE.MeshPhongMaterial({ color: 0x6A6A6A });
+            plane = new THREE.Mesh(geometry, material);
+            plane.name = "plane";
+            scene.add(plane);
+        }
+        
+        function createLightDirectional() {
+            let directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.name = "luz direccional";
+            directionalLight.position.set(-15, 10, 0);
+            scene.add(directionalLight);
+        }
+
+        function createLightPoint() {
+            let light = new THREE.PointLight(0xff0000, 1, 100);
+            let sphere = new THREE.SphereGeometry(0.5, 16, 8);
+            light.position.set(50, 50, 50);
+            light.name = "luz punto";
+            light.add(
+                    new THREE.Mesh(
+                    sphere,
+                    new THREE.MeshBasicMaterial({ color: 0xff0040 })
+                    )
+                );
+            light.position.set(13, 0, -7);
+            scene.add(light);
+        }
+
+        function createLightSpot() {
+            let spotLight = new THREE.SpotLight(0xff0000);
+            spotLight.castShadow = true;
+            spotLight.shadow.mapSize.width = 2048;
+            spotLight.shadow.mapSize.height = 2048;
+            spotLight.shadow.camera.near = 50;
+            spotLight.shadow.camera.far = 400;
+            spotLight.shadow.camera.fov = 3;
+            spotLight.position.set(-50, -50, 5);
+            spotLight.name = "luz lugar";
+            scene.add(spotLight);
+        }
+
+        function axesHelper() {
+            const axesHelper = new THREE.AxesHelper(50);
+            scene.add(axesHelper);
+        }
+
+        function createStats() {
             
-            function createPlane() {
-                planeGeometry = new THREE.PlaneGeometry(120, 120, 1, 1);
-                let material = new THREE.MeshLambertMaterial({ color: 0x565656 });
-                plane = new THREE.Mesh(planeGeometry, material);
-                plane.name = "plane";
-                scene.add(plane);
-            }
-            
-            function createStats() {
-                
             stats = new Stats()
             stats.setMode(2)
             stats.domElement.style.position = "absolute"
@@ -94,17 +133,14 @@
 
         function init() {
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xffffff);
+            scene.background = new THREE.Color(0xFFE8E8);
+            scene.fog = new THREE.Fog(0xFFD4D4, 10, 120);
             createCamera()
             createPlane()
-            // createSphere()
-            // createCylinder()
-            // createTorus()
-            // createCone()
-            // axesHelper()
-            // createLightDirectional()
-            // createLightPoint()
-            // createLightSpot()
+            axesHelper()
+            createLightDirectional()
+            createLightPoint()
+            createLightSpot()
             createRenderer()
             createStats()
             createDataGui()
