@@ -90,9 +90,9 @@
         }
 
         function loadGLTF() {
-            let balloonLoader = new THREE.GLTFLoader();
+            let loader = new THREE.GLTFLoader();
     
-            balloonLoader.load('./tetera.glb', (gltf) => {
+            loader.load('./tetera.glb', (gltf) => {
                 mesh = gltf.scene
                 scene.add(mesh)
             });
