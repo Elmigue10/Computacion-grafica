@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong</title>
+</head>
+<body>
+    
+    <div id="myStats"></div>
+    
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"
+    integrity="sha512-ZGgXd6TB5qjtvTU6Q5o/LJM4pwLNy8U8XXJh+vJZDXp2wC8ASrl4WOeivaq2fpYc3TnTCLzyDvVjY8YhvNYaXg=="
+    crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/three@0.85.0/examples/js/libs/stats.min.js"></script>
+    <script src='threex.keyboardstate.js'></script>
+
+
+    <script>
+
+        let scene
+        let camera
+        let renderer
+        let material
+        let gpu
+        let player
+        let controls
+        let stats
+        let light
+        let lastTimeMsec
+
+        let updateFcts = []
+        
+        let keyboard = new THREEx.KeyboardState()
+
+        let _controls = new (function(){
+            this.rotationSpeedY = 0.02
+        })
+
+        function createCamera() {
+            camera = new THREE.PerspectiveCamera(
+                75,
+                window.innerWidth / window.innerHeight,
+                1,
+                100
+            )
+
+            camera.position.z = 26
+        }
+            
+        function createRenderer() {
+            renderer = new THREE.WebGLRenderer()
+            renderer.setSize(window.innerWidth-20, window.innerHeight-20)
+            document.body.appendChild(renderer.domElement)
+        }
+        
+        function createLight(){
+            light = new THREE.DirectionalLight( 0xffffff)
+            light.position.set(1, 1, 1)
+            scene.add( light )
+        }
+
+        function axesHelper() {
+            const axesHelper = new THREE.AxesHelper(50)
+            scene.add(axesHelper)
+        }
+
+        function createStats() {
+            
+            stats = new Stats()
+            stats.setMode(2)
+            stats.domElement.style.position = "absolute"
+            stats.domElement.style.left = "0.45vw"
+            stats.domElement.style.top = "0.45vw"
+            document.getElementById("myStats").appendChild(stats.domElement)
+            return stats
+
+        }
+
+        function createGpu() {
+
+            geometry = new THREE.CubeGeometry(15, 2, 2)
+            let material = new THREE.MeshToonMaterial({ color: 0x1ED3FF })
+            gpu = new THREE.Mesh(geometry, material)
+            gpu.name = "gpu"
+            scene.add(gpu)
+
+            gpu.position.y = 15
+
+        }
+        
+        function createPlayer(){
+
+            geometry = new THREE.CubeGeometry(15, 2, 2)
+            let material = new THREE.MeshToonMaterial({ color: 0xFF1E1E })
+            player = new THREE.Mesh(geometry, material)
+            player.name = "player"
+            scene.add(player)
+
+            player.position.y = -15
+        }
+
+        function createBall(){
+
+            geometry = new THREE.SphereGeometry(0.6, 10, 10)
+            let material = new THREE.MeshToonMaterial({ color: 0xFFFF00 })
+            sphere = new THREE.Mesh(geometry, material)
+            scene.add(sphere)
+
+        }
+
+        function init() {
+            scene = new THREE.Scene()
+            scene.background = new THREE.Color(0xBCBCBC)
+            createCamera()
+            axesHelper()
+            createLight()
+            createRenderer()
+            createStats()
+            createGpu()
+            createPlayer()
+            createBall()
+
+            updateFcts.push(function(delta, now){
+            if( keyboard.pressed('d') ){
+                player.position.x += 7 * delta	
+            }else if( keyboard.pressed('a') ){
+                player.position.x -= 7 * delta	
+            }
+            if( keyboard.pressed('right') ){
+                player.position.x += 7 * delta	
+            }else if( keyboard.pressed('left') ){
+                player.position.x -= 7 * delta
+            }
+
+            updateFcts.push(function(){
+                renderer.render( scene, camera )		
+            })
+
+        })
+
+        }
+    
+        function animate(nowMsec) {
+            requestAnimationFrame(animate)
+            renderer.render(scene, camera)
+            stats.update()
+
+            lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+            let deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+            lastTimeMsec	= nowMsec
+
+            updateFcts.forEach(function(updateFn){
+			    updateFn(deltaMsec/1000, nowMsec/1000)
+		    })
+
+        }
+        init()
+        requestAnimationFrame(animate)
+
+    </script>
+
+</body>
+</html>
