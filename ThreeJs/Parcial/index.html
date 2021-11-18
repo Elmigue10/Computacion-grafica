@@ -25,7 +25,7 @@
         let camera
         let renderer
         let material
-        let gpu
+        let cpu
         let player
         let controls
         let ball
@@ -81,16 +81,16 @@
 
         }
 
-        function createGpu() {
+        function createCpu() {
 
             geometry = new THREE.CubeGeometry(15, 2, 2)
             let material = new THREE.MeshToonMaterial({ color: 0x1ED3FF })
-            gpu = new THREE.Mesh(geometry, material)
-            gpu.name = "gpu"
-            scene.add(gpu)
+            cpu = new THREE.Mesh(geometry, material)
+            cpu.name = "cpu"
+            scene.add(cpu)
 
-            gpu.position.y = 15
-            gpu.position.x = 25
+            cpu.position.y = 15
+            cpu.position.x = 25
 
         }
         
@@ -122,7 +122,7 @@
             createLight()
             createRenderer()
             createStats()
-            createGpu()
+            createCpu()
             createPlayer()
             createBall()
 
@@ -162,10 +162,10 @@
 		    })
 
 
-            gpu.position.x += desplazamiento
-            if(gpu.position.x >= 20){
+            cpu.position.x += desplazamiento
+            if(cpu.position.x >= 20){
                 desplazamiento = -0.15
-            } else if(gpu.position.x <= -20){
+            } else if(cpu.position.x <= -20){
                 desplazamiento = 0.15
             }
 
