@@ -28,6 +28,7 @@
         let gpu
         let player
         let controls
+        let ball
         let stats
         let light
         let lastTimeMsec
@@ -105,12 +106,12 @@
 
         function createBall(){
 
-            geometry = new THREE.SphereGeometry(0.6, 10, 10)
+            geometry = new THREE.SphereGeometry(1, 10, 10)
             let material = new THREE.MeshToonMaterial({ color: 0xFFFF00 })
-            sphere = new THREE.Mesh(geometry, material)
-            scene.add(sphere)
+            ball = new THREE.Mesh(geometry, material)
+            scene.add(ball)
 
-        }
+        } 
 
         function init() {
             scene = new THREE.Scene()
