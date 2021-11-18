@@ -90,6 +90,7 @@
             scene.add(gpu)
 
             gpu.position.y = 15
+            gpu.position.x = 25
 
         }
         
@@ -145,6 +146,8 @@
 
         }
     
+        let desplazamiento = 0.15
+
         function animate(nowMsec) {
             requestAnimationFrame(animate)
             renderer.render(scene, camera)
@@ -157,6 +160,14 @@
             updateFcts.forEach(function(updateFn){
 			    updateFn(deltaMsec/1000, nowMsec/1000)
 		    })
+
+
+            gpu.position.x += desplazamiento
+            if(gpu.position.x >= 20){
+                desplazamiento = -0.15
+            } else if(gpu.position.x <= -20){
+                desplazamiento = 0.15
+            }
 
         }
         init()
